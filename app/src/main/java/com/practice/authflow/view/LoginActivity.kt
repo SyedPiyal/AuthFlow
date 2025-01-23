@@ -1,5 +1,6 @@
 package com.practice.authflow.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -50,23 +51,41 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.practice.authflow.MainScreen
 import com.practice.authflow.R
-import com.practice.authflow.view.ui.theme.AuthFlowTheme
+
 
 class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        // Set up NavController for navigation within this activity
         setContent {
-            loginView()
+            val navController = rememberNavController()
+
+            NavHost(
+                navController = navController,
+                startDestination = "login"
+            ) {
+                composable("login") {
+                    LoginScreen(navController)
+                }
+                composable("main") {
+                    MainScreen() // Define the composable for the main screen
+                }
+            }
         }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showSystemUi = true, showBackground = true)
+
 @Composable
-fun loginView() {
+fun LoginScreen(navController: NavController) {
     // Box to layer the background and other content
     Box(
         modifier = Modifier.fillMaxSize()
@@ -158,7 +177,10 @@ fun loginView() {
 
                     // Sign In button
                     Button(
-                        onClick = { /* Handle button click */ },
+                        onClick = {
+                            // Navigate to MainScreen using NavController
+                            navController.navigate("main")
+                        },
                         modifier = Modifier.fillMaxWidth()
                             .padding(top = 16.dp)
                             .height(48.dp),
@@ -188,7 +210,9 @@ fun loginView() {
 
             // Sign Up button
             Button(
-                onClick = { /* Handle button click */ },
+                onClick = {
+
+                },
                 modifier = Modifier.fillMaxWidth().height(48.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xffF6F6F6), contentColor = Color(0xff007A8C)

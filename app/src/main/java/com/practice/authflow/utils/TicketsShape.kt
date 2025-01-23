@@ -37,7 +37,7 @@ class TicketShapeVertically(
     }
 
     private fun getTicketPath(size: Size, density: Density): Path {
-        val middleY = size.height.div(other = 1.5f)
+        val middleY = size.height.div(other = 1.3f)
         val circleRadiusInPx = with(density) { circleRadius.toPx() }
 
         return Path().apply {

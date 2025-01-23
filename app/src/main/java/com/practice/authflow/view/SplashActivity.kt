@@ -1,6 +1,9 @@
 package com.practice.authflow.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -26,6 +29,14 @@ class SplashActivity : ComponentActivity() {
         setContent {
             splashScreen()
         }
+        // Delay for 2 seconds and navigate to LoginActivity
+        Handler(Looper.getMainLooper()).postDelayed({
+            // Start the LoginActivity after the delay
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            // Finish SplashActivity so the user can't return to it
+            finish()
+        }, 2000)
     }
 }
 
